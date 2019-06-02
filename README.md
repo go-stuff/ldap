@@ -29,7 +29,8 @@ import (
 
 ## Example
 
-This is an example of how it would be implemented. Of course the constants could be environment variables or in a configuration file, etc... this is just an example.
+This is an example of how it would be implemented. Of course the constants could be environment variables or in a configuration file, etc... this is just an example.  
+The reason there are so many variables is to allow for connecting to multiple environments, it has been tested against OpenLDAP and Active Directory, there are some minor differences in objectClass and attributes.
 
 ```go
 package main
@@ -40,6 +41,7 @@ import (
     "github.com/go-stuff/ldap"
 )
 
+// OpenLDAP
 const (
     LDAP_SERVER             string = "192.168.1.100"
     LDAP_PORT               int    = 636
@@ -51,8 +53,25 @@ const (
     LDAP_GROUP_BASE_DN      string = "ou=group,dc=go-stuff,dc=ca"
     LDAP_GROUP_OBJECT_CLASS string = "posixGroup"
     LDAP_GROUP_SEARCH_ATTR  string = "memberUid"
+    LDAP_GROUP_SEARCH_FULL  bool   = "false"
     LDAP_AUTH_ATTR          string = "uid"
 )
+
+// Active Dreictory
+// const (
+//     LDAP_SERVER             string = "LDAPSSL"
+//     LDAP_PORT               int    = 636
+//     LDAP_BIND_DN            string = "CN=admin,OU=Users,DC=go-stuff,DC=ca"
+//     LDAP_BIND_PASS          string = "password"
+//     LDAP_USER_BASE_DN       string = "OU=Users,DC=go-stuff,DC=ca"
+//     LDAP_USER_OBJECT_CLASS  string = "person"
+//     LDAP_USER_SEARCH_ATTR   string = "CN"
+//     LDAP_GROUP_BASE_DN      string = "OU=Groups,DC=go-stuff,DC=ca"
+//     LDAP_GROUP_OBJECT_CLASS string = "group"
+//     LDAP_GROUP_SEARCH_ATTR  string = "member"
+//     LDAP_GROUP_SEARCH_FULL  bool   = true
+//     LDAP_AUTH_ATTR          string = "CN"
+// )
 
 func main() {
     username, groups, err := ldap.Auth(
