@@ -2,6 +2,7 @@ package ldap_test
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/go-stuff/ldap"
@@ -141,6 +142,11 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 	)
 	if err == nil {
 		t.Fatal("expected to fail invalid group search")
+	}
+
+	// test lowercase username
+	if username != strings.ToLower(os.Getenv("LDAP_TEST_USER")) {
+		t.Fatal("unexpected username")
 	}
 
 	// test group full search
