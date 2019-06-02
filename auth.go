@@ -72,7 +72,7 @@ func Auth(
 	var groupFilter string
 
 	if groupSearchFull {
-		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s,%s))", groupObjectClass, groupSearchAttr, user, userBaseDN)
+		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s=%s,%s))", groupObjectClass, groupSearchAttr, userSearchAttr, user, userBaseDN)
 	} else {
 		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s))", groupObjectClass, groupSearchAttr, user)
 	}
