@@ -2,7 +2,6 @@ package ldap
 
 import (
 	"crypto/tls"
-	"errors"
 	"fmt"
 	"strings"
 
@@ -14,17 +13,15 @@ import (
 // all in lowercase or an error.
 func Auth(
 	server string,
-	port int,
+	port string,
 	bindDN string,
 	bindPass string,
 	userBaseDN string,
-	userObjectClass string,
 	userSearchAttr string,
 	groupBaseDN string,
 	groupObjectClass string,
 	groupSearchAttr string,
-	groupSearchFull bool,
-	authAttr string,
+	groupSearchFull string,
 	user string,
 	pass string,
 ) (string, []string, error) {
@@ -35,7 +32,7 @@ func Auth(
 	username = strings.ToLower(user)
 
 	// connect to ldap
-	con, err := ldap.DialTLS("tcp", fmt.Sprintf("%s:%d", server, port), &tls.Config{InsecureSkipVerify: true})
+	con, err := ldap.DialTLS("tcp", fmt.Sprintf("%s:%s", server, port), &tls.Config{InsecureSkipVerify: true})
 	if err != nil {
 		return username, nil, err
 	}
@@ -47,34 +44,15 @@ func Auth(
 		return username, nil, err
 	}
 
-	// search users request
-	searchUsers := ldap.NewSearchRequest(
-		userBaseDN,
-		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
-		fmt.Sprintf("(&(objectClass=%s)(%s=%s))", userObjectClass, userSearchAttr, user),
-		[]string{"cn"},
-		nil,
-	)
-
-	// search users
-	usersResult, err := con.Search(searchUsers)
+	// bind the user account to authenticate
+	err = con.Bind(fmt.Sprintf("%s=%s,%s", userSearchAttr, user, userBaseDN), pass)
 	if err != nil {
 		return username, nil, err
 	}
 
-	// no user returned
-	if len(usersResult.Entries) == 0 {
-		return username, nil, errors.New("user does not exist")
-	}
-
-	// more than one user returned
-	if len(usersResult.Entries) > 1 {
-		return username, nil, errors.New("too many users returned")
-	}
-
 	// full group search filter or simple search filter
 	var groupFilter string
-	if groupSearchFull {
+	if groupSearchFull == "true" {
 		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s=%s,%s))", groupObjectClass, groupSearchAttr, userSearchAttr, user, userBaseDN)
 	} else {
 		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s))", groupObjectClass, groupSearchAttr, user)
@@ -100,12 +78,6 @@ func Auth(
 		for _, attribute := range group.Attributes {
 			groups = append(groups, strings.ToLower(attribute.Values[0]))
 		}
-	}
-
-	// bind the user account to authenticate
-	err = con.Bind(fmt.Sprintf("%s=%s,%s", authAttr, user, userBaseDN), pass)
-	if err != nil {
-		return username, nil, err
 	}
 
 	return username, groups, nil

@@ -45,33 +45,29 @@ import (
 // OpenLDAP
 const (
     LDAP_SERVER             string = "192.168.1.100"
-    LDAP_PORT               int    = 636
+    LDAP_PORT               string = "636"
     LDAP_BIND_DN            string = "cn=admin,dc=go-stuff,dc=ca"
     LDAP_BIND_PASS          string = "password"
     LDAP_USER_BASE_DN       string = "ou=people,dc=go-stuff,dc=ca"
-    LDAP_USER_OBJECT_CLASS  string = "person"
     LDAP_USER_SEARCH_ATTR   string = "uid"
     LDAP_GROUP_BASE_DN      string = "ou=group,dc=go-stuff,dc=ca"
     LDAP_GROUP_OBJECT_CLASS string = "posixGroup"
     LDAP_GROUP_SEARCH_ATTR  string = "memberUid"
-    LDAP_GROUP_SEARCH_FULL  bool   = "false"
-    LDAP_AUTH_ATTR          string = "uid"
+    LDAP_GROUP_SEARCH_FULL  string = "false"
 )
 
 // Active Dreictory
 // const (
 //     LDAP_SERVER             string = "LDAPSSL"
-//     LDAP_PORT               int    = 636
+//     LDAP_PORT               string = "636"
 //     LDAP_BIND_DN            string = "CN=admin,OU=Users,DC=go-stuff,DC=ca"
 //     LDAP_BIND_PASS          string = "password"
 //     LDAP_USER_BASE_DN       string = "OU=Users,DC=go-stuff,DC=ca"
-//     LDAP_USER_OBJECT_CLASS  string = "person"
 //     LDAP_USER_SEARCH_ATTR   string = "CN"
 //     LDAP_GROUP_BASE_DN      string = "OU=Groups,DC=go-stuff,DC=ca"
 //     LDAP_GROUP_OBJECT_CLASS string = "group"
 //     LDAP_GROUP_SEARCH_ATTR  string = "member"
-//     LDAP_GROUP_SEARCH_FULL  bool   = true
-//     LDAP_AUTH_ATTR          string = "CN"
+//     LDAP_GROUP_SEARCH_FULL  string = "true"
 // )
 
 func main() {
