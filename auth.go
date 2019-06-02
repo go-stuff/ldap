@@ -9,6 +9,9 @@ import (
 	"gopkg.in/ldap.v3"
 )
 
+// Auth will search with LDAP a given user, authenticate that user and return
+// the username as a string in all lowercase, groups as a slice of strings
+// all in lowercase or an error.
 func Auth(
 	server string,
 	port int,
@@ -69,8 +72,8 @@ func Auth(
 		return username, nil, errors.New("too many users returned")
 	}
 
+	// full group search filter or simple search filter
 	var groupFilter string
-
 	if groupSearchFull {
 		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s=%s,%s))", groupObjectClass, groupSearchAttr, userSearchAttr, user, userBaseDN)
 	} else {
