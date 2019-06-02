@@ -77,6 +77,8 @@ func Auth(
 		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s))", groupObjectClass, groupSearchAttr, user)
 	}
 
+	fmt.Println(groupFilter)
+
 	// search groups request
 	searchGroups := ldap.NewSearchRequest(
 		groupBaseDN,
