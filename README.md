@@ -1,5 +1,6 @@
 # ldap
 
+[![GoDoc](https://godoc.org/github.com/go-stuff/ldap?status.svg)](https://godoc.org/github.com/go-stuff/ldap)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-stuff/ldap)](https://goreportcard.com/report/github.com/go-stuff/ldap)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
