@@ -15,7 +15,12 @@ func Auth(
 	bindDN string,
 	bindPass string,
 	userBaseDN string,
+	userObjectClass string,
+	userSearchAttr string,
 	groupBaseDN string,
+	groupObjectClass string,
+	groupSearchAttr string,
+	authAttr string,
 	user string,
 	pass string,
 ) (string, []string, error) {
@@ -42,7 +47,7 @@ func Auth(
 	searchUsers := ldap.NewSearchRequest(
 		userBaseDN,
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
-		fmt.Sprintf("(&(objectClass=person)(uid=%s))", user),
+		fmt.Sprintf("(&(objectClass=%s)(%s=%s))", userObjectClass, userSearchAttr, user),
 		[]string{"cn"},
 		nil,
 	)
@@ -67,7 +72,7 @@ func Auth(
 	searchGroups := ldap.NewSearchRequest(
 		groupBaseDN,
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
-		fmt.Sprintf("(memberUid=%s)", user),
+		fmt.Sprintf("(&(objectClass=%s)(%s=%s))", groupObjectClass, groupSearchAttr, user),
 		[]string{"cn"},
 		nil,
 	)
@@ -86,7 +91,7 @@ func Auth(
 	}
 
 	// bind the user account to authenticate
-	err = con.Bind(fmt.Sprintf("uid=%s,%s", user, userBaseDN), pass)
+	err = con.Bind(fmt.Sprintf("%s=%s,%s", authAttr, user, userBaseDN), pass)
 	if err != nil {
 		return username, nil, err
 	}
