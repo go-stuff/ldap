@@ -84,7 +84,7 @@ func Auth(
 		groupBaseDN,
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
 		groupFilter,
-		nil, //[]string{"cn"},
+		[]string{"cn"},
 		nil,
 	)
 
