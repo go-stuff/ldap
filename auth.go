@@ -20,6 +20,7 @@ func Auth(
 	groupBaseDN string,
 	groupObjectClass string,
 	groupSearchAttr string,
+	groupSearchFull bool,
 	authAttr string,
 	user string,
 	pass string,
@@ -68,12 +69,20 @@ func Auth(
 		return username, nil, errors.New("too many users returned")
 	}
 
+	var groupFilter string
+
+	if groupSearchFull {
+		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s,%s))", groupObjectClass, groupSearchAttr, user, userBaseDN)
+	} else {
+		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s))", groupObjectClass, groupSearchAttr, user)
+	}
+
 	// search groups request
 	searchGroups := ldap.NewSearchRequest(
 		groupBaseDN,
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
-		fmt.Sprintf("(&(objectClass=%s)(%s=%s))", groupObjectClass, groupSearchAttr, user),
-		[]string{"cn"},
+		groupFilter,
+		nil, //[]string{"cn"},
 		nil,
 	)
 
