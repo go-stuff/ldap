@@ -77,8 +77,6 @@ func Auth(
 		groupFilter = fmt.Sprintf("(&(objectClass=%s)(%s=%s))", groupObjectClass, groupSearchAttr, user)
 	}
 
-	fmt.Println(groupFilter)
-
 	// search groups request
 	searchGroups := ldap.NewSearchRequest(
 		groupBaseDN,
@@ -97,7 +95,6 @@ func Auth(
 	// get group values
 	for _, group := range groupsResult.Entries {
 		for _, attribute := range group.Attributes {
-			fmt.Printf("Group Attribute: %v, Values: %v\n", attribute.Name, attribute.Values)
 			groups = append(groups, strings.ToLower(attribute.Values[0]))
 		}
 	}
