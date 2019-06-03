@@ -10,12 +10,12 @@ steps:
     LDAP_BIND_DN: "cn=admin,dc=planetexpress,dc=com"
     LDAP_BIND_PASS: "GoodNewsEveryone"
     LDAP_USER_BASE_DN: "ou=people,dc=planetexpress,dc=com"
-    LDAP_USER_SEARCH_ATTR: "uid"
+    LDAP_USER_SEARCH_ATTR: "cn"
     LDAP_GROUP_BASE_DN: "ou=people,dc=planetexpress,dc=com"
     LDAP_GROUP_OBJECT_CLASS: "Group"
     LDAP_GROUP_SEARCH_ATTR: "member"
     LDAP_GROUP_SEARCH_FULL: "false"
-    LDAP_TEST_USER: "professor"
+    LDAP_TEST_USER: "Hubert J. Farnsworth"
     LDAP_TEST_PASSWORD: "professor"
   commands:
   - sleep 5
