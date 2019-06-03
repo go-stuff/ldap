@@ -85,9 +85,6 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 		os.Getenv("LDAP_TEST_USER"),
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
-	if err != nil {
-		fmt.Println(err)
-	}
 	if err == nil {
 		t.Fatal("expected to fail server does not exist")
 	}

@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: test
-  image: golang:latest
+  image: golang:1.11
   environment:
     LDAP_SERVER: "localhost"
     LDAP_PORT: "636"
