@@ -27,7 +27,7 @@ steps:
       from_secret: coveralls_token
   settings:
     files:
-    - coverage.txt
+    - ./coverage.txt
 
 - name: coverage
   image: plugins/codecov
