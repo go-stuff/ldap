@@ -1,6 +1,7 @@
 package ldap_test
 
 import (
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -69,6 +70,7 @@ func testsTeardown() {
 func TestAuthWithOpenLDAP(t *testing.T) {
 
 	// test an invalid connection
+	fmt.Println("test an invalid connection")
 	username, groups, err := ldap.Auth(
 		"server-doesnotexit",
 		os.Getenv("LDAP_PORT"),
@@ -83,11 +85,15 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 		os.Getenv("LDAP_TEST_USER"),
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if err == nil {
 		t.Fatal("expected to fail server does not exist")
 	}
 
 	// test an invalid bind account
+	fmt.Println("test an invalid bind account")
 	username, groups, err = ldap.Auth(
 		os.Getenv("LDAP_SERVER"),
 		os.Getenv("LDAP_PORT"),
@@ -107,6 +113,7 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 	}
 
 	// test an invalid user search
+	fmt.Println("test an invalid user search")
 	username, groups, err = ldap.Auth(
 		os.Getenv("LDAP_SERVER"),
 		os.Getenv("LDAP_PORT"),
@@ -126,6 +133,7 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 	}
 
 	// test an invalid group search
+	fmt.Println("test an invalid group search")
 	username, groups, err = ldap.Auth(
 		os.Getenv("LDAP_SERVER"),
 		os.Getenv("LDAP_PORT"),
@@ -145,11 +153,13 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 	}
 
 	// test lowercase username
+	fmt.Println("test lowercase username")
 	if username != strings.ToLower(os.Getenv("LDAP_TEST_USER")) {
 		t.Fatal("unexpected username")
 	}
 
 	// test group full search
+	fmt.Println("test group full search")
 	username, groups, err = ldap.Auth(
 		os.Getenv("LDAP_SERVER"),
 		os.Getenv("LDAP_PORT"),
@@ -191,6 +201,7 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 	// }
 
 	// test a user that does not exist
+	fmt.Println("test a user that does not exist")
 	username, groups, err = ldap.Auth(
 		os.Getenv("LDAP_SERVER"),
 		os.Getenv("LDAP_PORT"),
