@@ -1,9 +1,7 @@
 package ldap_test
 
 import (
-	"fmt"
 	"os"
-	"strings"
 	"testing"
 
 	"github.com/go-stuff/ldap"
@@ -69,111 +67,111 @@ func testsTeardown() {
 
 func TestAuthWithOpenLDAP(t *testing.T) {
 
-	// test an invalid connection
-	fmt.Println("test an invalid connection")
-	username, groups, err := ldap.Auth(
-		"server-doesnotexit",
-		os.Getenv("LDAP_PORT"),
-		os.Getenv("LDAP_BIND_DN"),
-		os.Getenv("LDAP_BIND_PASS"),
-		os.Getenv("LDAP_USER_BASE_DN"),
-		os.Getenv("LDAP_USER_SEARCH_ATTR"),
-		os.Getenv("LDAP_GROUP_BASE_DN"),
-		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
-		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
-		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
-		os.Getenv("LDAP_TEST_USER"),
-		os.Getenv("LDAP_TEST_PASSWORD"),
-	)
-	if err == nil {
-		t.Fatal("expected to fail server does not exist")
-	}
+	// // test an invalid connection
+	// fmt.Println("test an invalid connection")
+	// username, groups, err := ldap.Auth(
+	// 	"server-doesnotexit",
+	// 	os.Getenv("LDAP_PORT"),
+	// 	os.Getenv("LDAP_BIND_DN"),
+	// 	os.Getenv("LDAP_BIND_PASS"),
+	// 	os.Getenv("LDAP_USER_BASE_DN"),
+	// 	os.Getenv("LDAP_USER_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_BASE_DN"),
+	// 	os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+	// 	os.Getenv("LDAP_TEST_USER"),
+	// 	os.Getenv("LDAP_TEST_PASSWORD"),
+	// )
+	// if err == nil {
+	// 	t.Fatal("expected to fail server does not exist")
+	// }
 
-	// test an invalid bind account
-	fmt.Println("test an invalid bind account")
-	username, groups, err = ldap.Auth(
-		os.Getenv("LDAP_SERVER"),
-		os.Getenv("LDAP_PORT"),
-		"binddn-doesnotexist",
-		os.Getenv("LDAP_BIND_PASS"),
-		os.Getenv("LDAP_USER_BASE_DN"),
-		os.Getenv("LDAP_USER_SEARCH_ATTR"),
-		os.Getenv("LDAP_GROUP_BASE_DN"),
-		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
-		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
-		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
-		os.Getenv("LDAP_TEST_USER"),
-		os.Getenv("LDAP_TEST_PASSWORD"),
-	)
-	if err == nil {
-		t.Fatal("expected to fail binddn does not exist")
-	}
+	// // test an invalid bind account
+	// fmt.Println("test an invalid bind account")
+	// username, groups, err = ldap.Auth(
+	// 	os.Getenv("LDAP_SERVER"),
+	// 	os.Getenv("LDAP_PORT"),
+	// 	"binddn-doesnotexist",
+	// 	os.Getenv("LDAP_BIND_PASS"),
+	// 	os.Getenv("LDAP_USER_BASE_DN"),
+	// 	os.Getenv("LDAP_USER_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_BASE_DN"),
+	// 	os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+	// 	os.Getenv("LDAP_TEST_USER"),
+	// 	os.Getenv("LDAP_TEST_PASSWORD"),
+	// )
+	// if err == nil {
+	// 	t.Fatal("expected to fail binddn does not exist")
+	// }
 
 	// test an invalid user search
-	fmt.Println("test an invalid user search")
-	username, groups, err = ldap.Auth(
-		os.Getenv("LDAP_SERVER"),
-		os.Getenv("LDAP_PORT"),
-		os.Getenv("LDAP_BIND_DN"),
-		os.Getenv("LDAP_BIND_PASS"),
-		"baseDN-doesnotexist",
-		"attribute-doesnotexist",
-		os.Getenv("LDAP_GROUP_BASE_DN"),
-		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
-		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
-		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
-		os.Getenv("LDAP_TEST_USER"),
-		os.Getenv("LDAP_TEST_PASSWORD"),
-	)
-	if err == nil {
-		t.Fatal("expected to fail invalid user search")
-	}
+	// fmt.Println("test an invalid user search")
+	// username, groups, err := ldap.Auth(
+	// 	os.Getenv("LDAP_SERVER"),
+	// 	os.Getenv("LDAP_PORT"),
+	// 	os.Getenv("LDAP_BIND_DN"),
+	// 	os.Getenv("LDAP_BIND_PASS"),
+	// 	"baseDN-doesnotexist",
+	// 	"attribute-doesnotexist",
+	// 	os.Getenv("LDAP_GROUP_BASE_DN"),
+	// 	os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+	// 	os.Getenv("LDAP_TEST_USER"),
+	// 	os.Getenv("LDAP_TEST_PASSWORD"),
+	// )
+	// if err == nil {
+	// 	t.Fatal("expected to fail invalid user search")
+	// }
 
-	// test an invalid group search
-	fmt.Println("test an invalid group search")
-	username, groups, err = ldap.Auth(
-		os.Getenv("LDAP_SERVER"),
-		os.Getenv("LDAP_PORT"),
-		os.Getenv("LDAP_BIND_DN"),
-		os.Getenv("LDAP_BIND_PASS"),
-		os.Getenv("LDAP_USER_BASE_DN"),
-		os.Getenv("LDAP_USER_SEARCH_ATTR"),
-		"baseDN-doesnotexist",
-		"objectClass-doesnotexist",
-		"attribute-doesnotexist",
-		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
-		os.Getenv("LDAP_TEST_USER"),
-		os.Getenv("LDAP_TEST_PASSWORD"),
-	)
-	if err == nil {
-		t.Fatal("expected to fail invalid group search")
-	}
+	// // test an invalid group search
+	// fmt.Println("test an invalid group search")
+	// username, groups, err = ldap.Auth(
+	// 	os.Getenv("LDAP_SERVER"),
+	// 	os.Getenv("LDAP_PORT"),
+	// 	os.Getenv("LDAP_BIND_DN"),
+	// 	os.Getenv("LDAP_BIND_PASS"),
+	// 	os.Getenv("LDAP_USER_BASE_DN"),
+	// 	os.Getenv("LDAP_USER_SEARCH_ATTR"),
+	// 	"baseDN-doesnotexist",
+	// 	"objectClass-doesnotexist",
+	// 	"attribute-doesnotexist",
+	// 	os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+	// 	os.Getenv("LDAP_TEST_USER"),
+	// 	os.Getenv("LDAP_TEST_PASSWORD"),
+	// )
+	// if err == nil {
+	// 	t.Fatal("expected to fail invalid group search")
+	// }
 
-	// test lowercase username
-	fmt.Println("test lowercase username")
-	if username != strings.ToLower(os.Getenv("LDAP_TEST_USER")) {
-		t.Fatal("unexpected username")
-	}
+	// // test lowercase username
+	// fmt.Println("test lowercase username")
+	// if username != strings.ToLower(os.Getenv("LDAP_TEST_USER")) {
+	// 	t.Fatal("unexpected username")
+	// }
 
-	// test group full search
-	fmt.Println("test group full search")
-	username, groups, err = ldap.Auth(
-		os.Getenv("LDAP_SERVER"),
-		os.Getenv("LDAP_PORT"),
-		os.Getenv("LDAP_BIND_DN"),
-		os.Getenv("LDAP_BIND_PASS"),
-		os.Getenv("LDAP_USER_BASE_DN"),
-		os.Getenv("LDAP_USER_SEARCH_ATTR"),
-		os.Getenv("LDAP_GROUP_BASE_DN"),
-		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
-		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
-		"true",
-		os.Getenv("LDAP_TEST_USER"),
-		os.Getenv("LDAP_TEST_PASSWORD"),
-	)
-	if len(groups) != 0 {
-		t.Fatal("expected to return 0 groups in OpenLDAP")
-	}
+	// // test group full search
+	// fmt.Println("test group full search")
+	// username, groups, err = ldap.Auth(
+	// 	os.Getenv("LDAP_SERVER"),
+	// 	os.Getenv("LDAP_PORT"),
+	// 	os.Getenv("LDAP_BIND_DN"),
+	// 	os.Getenv("LDAP_BIND_PASS"),
+	// 	os.Getenv("LDAP_USER_BASE_DN"),
+	// 	os.Getenv("LDAP_USER_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_BASE_DN"),
+	// 	os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+	// 	"true",
+	// 	os.Getenv("LDAP_TEST_USER"),
+	// 	os.Getenv("LDAP_TEST_PASSWORD"),
+	// )
+	// if len(groups) != 0 {
+	// 	t.Fatal("expected to return 0 groups in OpenLDAP")
+	// }
 
 	// // test a valid user
 	// username, groups, err = ldap.Auth(
@@ -197,9 +195,136 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 	// 	t.Fatal("did not get expected results")
 	// }
 
+	// // test a user that does not exist
+	// fmt.Println("test a user that does not exist")
+	// username, groups, err = ldap.Auth(
+	// 	os.Getenv("LDAP_SERVER"),
+	// 	os.Getenv("LDAP_PORT"),
+	// 	os.Getenv("LDAP_BIND_DN"),
+	// 	os.Getenv("LDAP_BIND_PASS"),
+	// 	os.Getenv("LDAP_USER_BASE_DN"),
+	// 	os.Getenv("LDAP_USER_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_BASE_DN"),
+	// 	os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+	// 	os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+	// 	"web-doesnotexist",
+	// 	os.Getenv("LDAP_TEST_PASSWORD"),
+	// )
+	// if err == nil {
+	// 	t.Fatal("expected to fail user does not exist")
+	// }
+
+}
+
+func TestInvalidConnection(t *testing.T) {
+	// test an invalid connection
+	_, _, err := ldap.Auth(
+		"server-doesnotexit",
+		os.Getenv("LDAP_PORT"),
+		os.Getenv("LDAP_BIND_DN"),
+		os.Getenv("LDAP_BIND_PASS"),
+		os.Getenv("LDAP_USER_BASE_DN"),
+		os.Getenv("LDAP_USER_SEARCH_ATTR"),
+		os.Getenv("LDAP_GROUP_BASE_DN"),
+		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+		os.Getenv("LDAP_TEST_USER"),
+		os.Getenv("LDAP_TEST_PASSWORD"),
+	)
+	if err == nil {
+		t.Fatal("expected to fail server does not exist")
+	}
+}
+
+func TestInvalidBindAccount(t *testing.T) {
+	// test an invalid bind account
+	_, _, err := ldap.Auth(
+		os.Getenv("LDAP_SERVER"),
+		os.Getenv("LDAP_PORT"),
+		"binddn-doesnotexist",
+		os.Getenv("LDAP_BIND_PASS"),
+		os.Getenv("LDAP_USER_BASE_DN"),
+		os.Getenv("LDAP_USER_SEARCH_ATTR"),
+		os.Getenv("LDAP_GROUP_BASE_DN"),
+		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+		os.Getenv("LDAP_TEST_USER"),
+		os.Getenv("LDAP_TEST_PASSWORD"),
+	)
+	if err == nil {
+		t.Fatal("expected to fail binddn does not exist")
+	}
+}
+
+func TestInvalidUserSearch(t *testing.T) {
+	// test an invalid user search
+	_, _, err := ldap.Auth(
+		os.Getenv("LDAP_SERVER"),
+		os.Getenv("LDAP_PORT"),
+		os.Getenv("LDAP_BIND_DN"),
+		os.Getenv("LDAP_BIND_PASS"),
+		"baseDN-doesnotexist",
+		"attribute-doesnotexist",
+		os.Getenv("LDAP_GROUP_BASE_DN"),
+		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+		os.Getenv("LDAP_TEST_USER"),
+		os.Getenv("LDAP_TEST_PASSWORD"),
+	)
+	if err == nil {
+		t.Fatal("expected to fail invalid user search")
+	}
+}
+
+func TestInvalidGroupSearch(t *testing.T) {
+	// test an invalid group search
+	_, _, err := ldap.Auth(
+		os.Getenv("LDAP_SERVER"),
+		os.Getenv("LDAP_PORT"),
+		os.Getenv("LDAP_BIND_DN"),
+		os.Getenv("LDAP_BIND_PASS"),
+		os.Getenv("LDAP_USER_BASE_DN"),
+		os.Getenv("LDAP_USER_SEARCH_ATTR"),
+		"baseDN-doesnotexist",
+		"objectClass-doesnotexist",
+		"attribute-doesnotexist",
+		os.Getenv("LDAP_GROUP_SEARCH_FULL"),
+		os.Getenv("LDAP_TEST_USER"),
+		os.Getenv("LDAP_TEST_PASSWORD"),
+	)
+	if err == nil {
+		t.Fatal("expected to fail invalid group search")
+	}
+}
+
+func TestGroupFullSearch(t *testing.T) {
+	// test group full search
+	_, groups, _ := ldap.Auth(
+		os.Getenv("LDAP_SERVER"),
+		os.Getenv("LDAP_PORT"),
+		os.Getenv("LDAP_BIND_DN"),
+		os.Getenv("LDAP_BIND_PASS"),
+		os.Getenv("LDAP_USER_BASE_DN"),
+		os.Getenv("LDAP_USER_SEARCH_ATTR"),
+		os.Getenv("LDAP_GROUP_BASE_DN"),
+		os.Getenv("LDAP_GROUP_OBJECT_CLASS"),
+		os.Getenv("LDAP_GROUP_SEARCH_ATTR"),
+		"true",
+		os.Getenv("LDAP_TEST_USER"),
+		os.Getenv("LDAP_TEST_PASSWORD"),
+	)
+	if len(groups) != 0 {
+		t.Fatal("expected to return 0 groups in OpenLDAP")
+	}
+}
+
+func TestUserNotExist(t *testing.T) {
 	// test a user that does not exist
-	fmt.Println("test a user that does not exist")
-	username, groups, err = ldap.Auth(
+	_, _, err := ldap.Auth(
 		os.Getenv("LDAP_SERVER"),
 		os.Getenv("LDAP_PORT"),
 		os.Getenv("LDAP_BIND_DN"),
@@ -216,5 +341,4 @@ func TestAuthWithOpenLDAP(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected to fail user does not exist")
 	}
-
 }
