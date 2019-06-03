@@ -1,6 +1,7 @@
 package ldap_test
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -233,6 +234,9 @@ func TestInvalidConnection(t *testing.T) {
 		os.Getenv("LDAP_TEST_USER"),
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if err == nil {
 		t.Fatal("expected to fail server does not exist")
 	}
@@ -254,6 +258,9 @@ func TestInvalidBindAccount(t *testing.T) {
 		os.Getenv("LDAP_TEST_USER"),
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if err == nil {
 		t.Fatal("expected to fail binddn does not exist")
 	}
@@ -275,6 +282,9 @@ func TestInvalidUserSearch(t *testing.T) {
 		os.Getenv("LDAP_TEST_USER"),
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if err == nil {
 		t.Fatal("expected to fail invalid user search")
 	}
@@ -296,6 +306,9 @@ func TestInvalidGroupSearch(t *testing.T) {
 		os.Getenv("LDAP_TEST_USER"),
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if err == nil {
 		t.Fatal("expected to fail invalid group search")
 	}
@@ -303,7 +316,7 @@ func TestInvalidGroupSearch(t *testing.T) {
 
 func TestGroupFullSearch(t *testing.T) {
 	// test group full search
-	_, groups, _ := ldap.Auth(
+	_, groups, err := ldap.Auth(
 		os.Getenv("LDAP_SERVER"),
 		os.Getenv("LDAP_PORT"),
 		os.Getenv("LDAP_BIND_DN"),
@@ -317,6 +330,9 @@ func TestGroupFullSearch(t *testing.T) {
 		os.Getenv("LDAP_TEST_USER"),
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if len(groups) != 0 {
 		t.Fatal("expected to return 0 groups in OpenLDAP")
 	}
@@ -338,6 +354,9 @@ func TestUserNotExist(t *testing.T) {
 		"web-doesnotexist",
 		os.Getenv("LDAP_TEST_PASSWORD"),
 	)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if err == nil {
 		t.Fatal("expected to fail user does not exist")
 	}
