@@ -22,6 +22,7 @@ steps:
   - go env
   - go test -v -coverprofile=coverage.txt -covermode=atomic ./...
   - cat ./coverage.txt
+  - ls -la /drone/src
 
 - name: coverage
   image: plugins/codecov
