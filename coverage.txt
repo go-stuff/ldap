@@ -1,4 +1,4 @@
-mode: atomic
+mode: count
 github.com/go-stuff/ldap/ldap.go:27.29,36.16 6 6
 github.com/go-stuff/ldap/ldap.go:39.2,43.16 3 5
 github.com/go-stuff/ldap/ldap.go:48.2,49.16 2 4

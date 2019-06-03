@@ -20,8 +20,9 @@ steps:
   commands:
     - go test -v .
     - go vet
-    - go test -race -coverprofile=coverage.txt
-
+    - go test -race
+    - go test -covermode=count -coverprofile=coverage.txt
+    
 - name: coverage
   image: plugins/codecov
   settings: 
