@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: test
-  image: golang:1.11
+  image: golang:latest
   environment:
     LDAP_SERVER: "localhost"
     LDAP_PORT: "636"
@@ -19,6 +19,7 @@ steps:
     LDAP_TEST_PASSWORD: "professor"
   commands:
   - go version
+  - go env
   - go test -v -coverprofile=coverage.txt -covermode=atomic
 
 - name: coverage
