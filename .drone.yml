@@ -20,6 +20,15 @@ steps:
   commands:
   - go test -coverprofile=coverage.txt -covermode=atomic -coverpkg $(go list github.com/go-stuff/ldap/...) github.com/go-stuff/ldap/...
 
+- name: coveralls
+  image: lizheming/drone-coveralls
+  environment:
+    COVERALLS_REPO_TOKEN:
+      from_secret: coveralls_token
+  settings:
+    files:
+    - coverage.txt
+
 - name: coverage
   image: plugins/codecov
   settings: 
