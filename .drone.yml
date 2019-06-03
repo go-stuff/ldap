@@ -18,8 +18,7 @@ steps:
     LDAP_TEST_USER: "professor"
     LDAP_TEST_PASSWORD: "professor"
   commands:
-  - sleep 60
-  - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - go test -race -cover -covermode=atomic -coverpkg $(go list github.com/go-stuff/ldap/...) github.com/go-stuff/ldap/...
 
 - name: coverage
   image: plugins/codecov
@@ -33,4 +32,5 @@ services:
 - name: openldap
   image: gitea/test-openldap:latest
   ports:
+  - 389
   - 636
