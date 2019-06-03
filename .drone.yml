@@ -21,6 +21,7 @@ steps:
   - go version
   - go env
   - go test -v -coverprofile=coverage.txt -covermode=atomic ./...
+  - cat ./coverage.txt
 
 - name: coverage
   image: plugins/codecov
