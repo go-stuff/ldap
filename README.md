@@ -12,7 +12,7 @@ Using [go-ldap.v3](https://github.com/go-ldap/ldap) to authenticate with LDAP an
 
 ## Packages Imported
 
-- Basic LDAP [github.com/go-ldap/ldap](https://github.com/go-ldap/ldap)
+Basic LDAP [github.com/go-ldap/ldap](https://github.com/go-ldap/ldap)
 
 ## Installation
 
