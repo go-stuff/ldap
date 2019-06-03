@@ -6,7 +6,7 @@ steps:
   image: golang:latest
   environment:
     LDAP_SERVER: "openldap"
-    LDAP_PORT: "636"
+    LDAP_PORT: "389"
     LDAP_BIND_DN: "uid=gitea,ou=service,dc=planetexpress,dc=com"
     LDAP_BIND_PASS: "password"
     LDAP_USER_BASE_DN: "ou=people,dc=planetexpress,dc=com"
