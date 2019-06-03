@@ -20,9 +20,8 @@ steps:
   commands:
     - go test -v .
     - go vet
-    - go test -race
-    - go test -covermode=count -coverprofile=coverage.txt
-    
+    - go test -race -coverprofile=coverage.txt -coverpkg=github.com/go-stuff/ldap
+
 - name: coverage
   image: plugins/codecov
   settings: 
