@@ -5,7 +5,7 @@ steps:
 - name: test
   image: golang:latest
   environment:
-    LDAP_SERVER: "localhost"
+    LDAP_SERVER: "openldap"
     LDAP_PORT: "636"
     LDAP_BIND_DN: "uid=gitea,ou=service,dc=planetexpress,dc=com"
     LDAP_BIND_PASS: "password"
@@ -23,7 +23,6 @@ steps:
   - go test -v -coverprofile=coverage.txt -covermode=atomic ./...
   - cat ./coverage.txt
   - ls -la /drone/src
-  - printenv
 
 - name: coverage
   image: plugins/codecov
