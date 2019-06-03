@@ -19,7 +19,7 @@ steps:
     LDAP_TEST_PASSWORD: "professor"
   commands:
   - go version
-  - go test -coverprofile=coverage.txt -covermode=atomic -coverpkg $(go list github.com/go-stuff/ldap/...) github.com/go-stuff/ldap/...
+  - go test -v -coverprofile=coverage.txt -covermode=atomic
 
 - name: coverage
   image: plugins/codecov
