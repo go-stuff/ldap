@@ -20,7 +20,7 @@ steps:
   commands:
     - go test -v .
     - go vet
-    - go test -race -cover -coverprofile=coverage.txt -covermode=atomic
+    - go test -race -coverprofile=coverage.txt
 
 - name: coverage
   image: plugins/codecov
